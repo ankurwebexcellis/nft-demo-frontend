@@ -16,7 +16,9 @@ function NftListings() {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [next, setNext] = useState("");
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState(
+    "0x5Af0D9827E0c53E4799BB226655A1de152A425a5"
+  );
 
   const fetchNfts = async () => {
     try {
@@ -49,7 +51,9 @@ function NftListings() {
   }, [address]);
 
   useEffect(() => {
-    if (next) document.addEventListener("scroll", trackScrolling, true);
+    if (next) {
+      document.addEventListener("scroll", trackScrolling, true);
+    }
   }, [next]);
 
   const trackScrolling = () => {
@@ -84,6 +88,11 @@ function NftListings() {
                       <select
                         className="form-select"
                         onChange={(e) => {
+                          document.removeEventListener(
+                            "scroll",
+                            trackScrolling,
+                            true
+                          );
                           setAddress(e.target.value);
                         }}
                         value={address}

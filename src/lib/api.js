@@ -16,13 +16,19 @@ export const loadNftByContract = async (params) => {
 };
 
 export const loadNftByWallet = async (params) => {
+  console.log("paramsparamsparams", {
+    params: params,
+  });
   try {
+    console.log("paramsparamsparams", process.env.REACT_APP_APIURL);
+    console.log("1nftnftnft");
     const nft = await api.get("nftApis/byWallet", {
-      params: params,
+      params: { address: params },
     });
+    // console.log("nftnftnft", nft?.data?.data);
     return nft?.data?.data;
   } catch (err) {
-    console.error(err);
+    console.error("www", err);
     return err;
   }
 };

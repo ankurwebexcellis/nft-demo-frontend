@@ -26,9 +26,7 @@ function NftDetails() {
 
   const truncateAddress = (address) => {
     if (!address) return "No Account";
-    const match = address.match(
-      /^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
-    );
+    const match = address.match(/^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/);
     if (!match) return address;
     return `${match[1]}…${match[2]}`;
   };
@@ -105,19 +103,18 @@ function NftDetails() {
                           {nftInfo?.owners?.map((owner, index) => (
                             <li key={owner?.address}>
                               <div className="number-list-box">
-                                <div className="number-list-numerical">
-                                  {index + 1}
-                                </div>
+                                <div className="number-list-numerical">{index + 1}</div>
                                 <div className="number-list-content">
                                   <a
-                                    href="#!"
-                                    onClick={(e) => {
-                                      e.preventDefault();
-                                      navigator.clipboard.writeText(
-                                        owner?.address
-                                      );
-                                      toast.success("Copied");
-                                    }}
+                                    href={"/wallet/" + owner?.address}
+                                    // onClick={(e) => {
+                                    //   e.preventDefault();
+
+                                    //   // navigator.clipboard.writeText(
+                                    //   //   owner?.address
+                                    //   // );
+                                    //   // toast.success("Copied");
+                                    // }}
                                   >
                                     {truncateAddress(owner?.address)}
                                   </a>

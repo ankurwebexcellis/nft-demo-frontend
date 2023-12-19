@@ -18,6 +18,7 @@ function App() {
       <Routes>
         <Route path="/" element={<ListByContract />} />
         <Route path="/wallet" element={<ListByWallet />} />
+        <Route path="/wallet/:address" element={<ListByWallet />} />
         <Route path="/nft/:address/:id" element={<NftDetails />} />
         <Route path="*" element={<h1>404</h1>} />
       </Routes>

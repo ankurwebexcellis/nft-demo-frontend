@@ -39,7 +39,7 @@ function NftListings() {
         <Sidebar page="contract" />
         <div className="main-content-wrapper position-relative">
           <div className="mcw-header d-flex align-items-center">
-            <h1>Contests</h1>
+            <h1>NFTs by Contract</h1>
           </div>
           <div className="fwc-wrapper">
             <div className="fwc-head ">

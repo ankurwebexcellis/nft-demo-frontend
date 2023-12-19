@@ -59,7 +59,7 @@ function ListByWallet() {
           <Sidebar page="wallet" />
           <div className="main-content-wrapper position-relative">
             <div className="mcw-header d-flex align-items-center">
-              <h1>Contests</h1>
+              <h1>NFTs By Wallet</h1>
             </div>
             <div className="fwc-wrapper">
               <ul className="grid-card-list d-flex flex-wrap">
@@ -73,7 +73,7 @@ function ListByWallet() {
           <Sidebar page="wallet" />
           <div className="main-content-wrapper position-relative">
             <div className="mcw-header d-flex align-items-center">
-              <h1>Contests</h1>
+              <h1>NFTs By Wallet</h1>
             </div>
             <div className="fwc-wrapper">
               <div className="fwc-body">

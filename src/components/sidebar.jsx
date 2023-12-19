@@ -7,7 +7,7 @@ function Sidebar({ page }) {
         <ul className="menu-list">
           <li className={`menu-item ${page === "contract" && "active"}`}>
             <a href="/">
-              NFT By Contract
+              NFTs by Contract
               <span className="angle-arrow">
                 <svg
                   width="16"
@@ -23,7 +23,7 @@ function Sidebar({ page }) {
           </li>
           <li className={`menu-item ${page === "wallet" && "active"}`}>
             <a href="/wallet">
-              NFT By Wallet
+              NFTs By Wallet
               <span className="angle-arrow">
                 <svg
                   width="16"

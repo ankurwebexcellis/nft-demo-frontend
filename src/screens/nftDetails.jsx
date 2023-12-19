@@ -4,6 +4,7 @@ import Sidebar from "../components/sidebar";
 import DetailsLoading from "../components/detailsLoading";
 import { loadNftDetails } from "../lib/api";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function NftDetails() {
   const [nftInfo, setNftInfo] = useState(null);
@@ -22,10 +23,19 @@ function NftDetails() {
   useEffect(() => {
     fetchNfts();
   }, []);
-  console.log(nftInfo);
+
+  const truncateAddress = (address) => {
+    if (!address) return "No Account";
+    const match = address.match(
+      /^(0x[a-zA-Z0-9]{3})[a-zA-Z0-9]+([a-zA-Z0-9]{4})$/
+    );
+    if (!match) return address;
+    return `${match[1]}…${match[2]}`;
+  };
   return (
     <>
       <Header />
+
       <div className="page-wrapper">
         <Sidebar page="contract" />
         <div className="fwc-wrapper">
@@ -99,7 +109,18 @@ function NftDetails() {
                                   {index + 1}
                                 </div>
                                 <div className="number-list-content">
-                                  <p>{owner?.address}</p>
+                                  <a
+                                    href="#!"
+                                    onClick={(e) => {
+                                      e.preventDefault();
+                                      navigator.clipboard.writeText(
+                                        owner?.address
+                                      );
+                                      toast.success("Copied");
+                                    }}
+                                  >
+                                    {truncateAddress(owner?.address)}
+                                  </a>
                                 </div>
                               </div>
                             </li>

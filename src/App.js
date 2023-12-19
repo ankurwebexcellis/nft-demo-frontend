@@ -1,4 +1,6 @@
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 //  Screens
 import ListByContract from "./screens/listByContract";
@@ -10,12 +12,16 @@ import Header from "./components/header";
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<ListByContract />} />
-      <Route path="/wallet" element={<ListByWallet />} />
-      <Route path="/nft/:address/:id" element={<NftDetails />} />
-      <Route path="*" element={<h1>404</h1>} />
-    </Routes>
+    <>
+      <ToastContainer position={"bottom-right"} />
+
+      <Routes>
+        <Route path="/" element={<ListByContract />} />
+        <Route path="/wallet" element={<ListByWallet />} />
+        <Route path="/nft/:address/:id" element={<NftDetails />} />
+        <Route path="*" element={<h1>404</h1>} />
+      </Routes>
+    </>
   );
 }
 

@@ -31,7 +31,6 @@ function ListByWallet() {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
-      // localStorage.setItem('wallet',accounts[0])
       setWallet(accounts[0]);
     } catch (err) {
       console.log(err);

@@ -22,7 +22,7 @@ function Sidebar({ page }) {
             </a>
           </li>
           <li className={`menu-item ${page === "wallet" && "active"}`}>
-            <a href="#!">
+            <a href="/wallet">
               NFT By Wallet
               <span className="angle-arrow">
                 <svg

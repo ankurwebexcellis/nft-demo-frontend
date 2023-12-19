@@ -16,9 +16,7 @@ function NftListings() {
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
   const [next, setNext] = useState("");
-  const [address, setAddress] = useState(
-    "0x5Af0D9827E0c53E4799BB226655A1de152A425a5"
-  );
+  const [address, setAddress] = useState(null);
 
   const fetchNfts = async () => {
     try {
@@ -26,7 +24,6 @@ function NftListings() {
       const response = await loadNftByContract(params);
       setNftList(response?.nfts);
       setNext(response?.next);
-      document.addEventListener("scroll", trackScrolling, true);
     } catch (err) {}
     setLoading(false);
     setLoadingMore(false);
@@ -39,36 +36,35 @@ function NftListings() {
       const response = await loadNftByContract(params);
       setNftList((prev) => [...prev, ...response?.nfts]);
       setNext(response?.next);
-      if (response?.nfts?.length > 0) {
-        document.addEventListener("scroll", trackScrolling, true);
-      }
     } catch (err) {}
     setLoading(false);
     setLoadingMore(false);
   };
 
   useEffect(() => {
-    setNext("");
     setLoading(true);
+    document.removeEventListener("scroll", trackScrolling, true);
+    setNext("");
     fetchNfts();
   }, [address]);
 
-  // useEffect(() => {
-  //    document.addEventListener("scroll", trackScrolling, true);
-  // }, [nftList?.length]);
+  useEffect(() => {
+    if (next) document.addEventListener("scroll", trackScrolling, true);
+  }, [next]);
 
   const trackScrolling = () => {
     if (
       scrollRef.current?.getBoundingClientRect().bottom - 1000 <=
       window.innerHeight
     ) {
+      console.log("event listener");
       setLoadingMore(true);
-
       fetchMoreNfts();
       document.removeEventListener("scroll", trackScrolling, true);
     }
   };
-  console.log(address, next);
+
+  // console.log("data", address, next);
   return (
     <>
       <Header />
@@ -88,7 +84,6 @@ function NftListings() {
                       <select
                         className="form-select"
                         onChange={(e) => {
-                          setNext("");
                           setAddress(e.target.value);
                         }}
                         value={address}

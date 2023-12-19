@@ -7,16 +7,22 @@ import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function NftDetails() {
+  //  Component States
   const [nftInfo, setNftInfo] = useState(null);
   const [loading, setLoading] = useState(false);
   const params = useParams();
 
+  //  Fetch NFT Info by contract address and NFT identifier address of the user
   const fetchNfts = async () => {
     setLoading(true);
     try {
       const response = await loadNftDetails(params.address, params.id);
+
+      //  Update state
       setNftInfo(response?.nft);
     } catch (err) {}
+
+    //  Disable loading states
     setLoading(false);
   };
 
@@ -24,6 +30,7 @@ function NftDetails() {
     fetchNfts();
   }, []);
 
+  //  Method to truncate wallet address
   const truncateAddress = (address) => {
     if (!address) return "No Account";
     const match = address.match(
@@ -55,12 +62,6 @@ function NftDetails() {
                         <strong>Token</strong>
                       </p>
                     </div>
-                    {/* <div className="gcdr-item flex-grow-1 w-auto">
-                      <h6>$25,000</h6>
-                      <p>
-                        <strong>Type</strong>
-                      </p>
-                    </div> */}
                     <div className="gcdr-item flex-grow-1 w-auto">
                       <h6>{nftInfo?.collection}</h6>
                       <p>

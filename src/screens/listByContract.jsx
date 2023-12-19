@@ -6,12 +6,14 @@ import { loadNftByContract } from "../lib/api";
 //  Components
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
-import Card from "../components/card";
 import CardLoading from "../components/cardLoading";
 import CardListing from "../components/cardListing";
 
 function NftListings() {
+  //  Ref for scroll,
   const scrollRef = useRef(null);
+
+  //  Component States
   const [nftList, setNftList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [loadingMore, setLoadingMore] = useState(false);
@@ -20,55 +22,74 @@ function NftListings() {
     "0x5Af0D9827E0c53E4799BB226655A1de152A425a5"
   );
 
+  //  GET Api method for NFT by contract address
   const fetchNfts = async () => {
     try {
       const params = { address };
+
       const response = await loadNftByContract(params);
+
+      //  Update States
       setNftList(response?.nfts);
       setNext(response?.next);
     } catch (err) {}
+
+    //  Disable loading states
     setLoading(false);
     setLoadingMore(false);
   };
 
+  //  GET Api method for infinite scroll
   const fetchMoreNfts = async () => {
     try {
       const params = { address };
-      if (next) params.next = next;
+      if (next) params.next = next; //  next "key" to get the data of next page
+
       const response = await loadNftByContract(params);
-      setNftList((prev) => [...prev, ...response?.nfts]);
+
+      //  Update States
+      setNftList((prev) => [...prev, ...response?.nfts]); //  Append the new list to the current list in the view
       setNext(response?.next);
     } catch (err) {}
+
+    //  Disable loading states
     setLoading(false);
     setLoadingMore(false);
   };
 
   useEffect(() => {
     setLoading(true);
+
+    //  Remove scroll event listener for infinite scroll
     document.removeEventListener("scroll", trackScrolling, true);
+
     setNext("");
     fetchNfts();
   }, [address]);
 
   useEffect(() => {
     if (next) {
+      //  Add scroll event listener for infinite scroll
       document.addEventListener("scroll", trackScrolling, true);
     }
   }, [next]);
 
+  //  Scroll tracking method for infinite scroll
   const trackScrolling = () => {
     if (
       scrollRef.current?.getBoundingClientRect().bottom - 1000 <=
       window.innerHeight
     ) {
-      console.log("event listener");
       setLoadingMore(true);
+
+      //  Fetch more NFTs
       fetchMoreNfts();
+
+      //  Remove scroll event listener for infinite scroll
       document.removeEventListener("scroll", trackScrolling, true);
     }
   };
 
-  // console.log("data", address, next);
   return (
     <>
       <Header />

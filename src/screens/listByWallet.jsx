@@ -11,12 +11,13 @@ import CardLoading from "../components/cardLoading";
 import CardListing from "../components/cardListing";
 
 function ListByWallet() {
+  //  Component States
   const [nftList, setNftList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [next, setNext] = useState("");
-
   const [wallet, setWallet] = useState("");
 
+  //  Metamask wallet connect method
   const connectWallet = async (e) => {
     if (e) e.preventDefault();
     try {
@@ -31,19 +32,24 @@ function ListByWallet() {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
+
+      //  Set wallet state with user wallet address
       setWallet(accounts[0]);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
+  //  Fetch NFTs by wallet address of the user
   const fetchNfts = async () => {
     setLoading(true);
     try {
       const response = await loadNftByWallet(wallet);
+
+      //  Update states
       setNftList(response?.nfts);
       setNext(response?.next);
     } catch (err) {}
+
+    //  Disable loading states
     setLoading(false);
   };
 

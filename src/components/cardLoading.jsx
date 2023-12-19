@@ -3,10 +3,10 @@ import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 function CardLoading() {
   return (
     <SkeletonTheme baseColor="#202020" highlightColor="#444">
-      <li class="grid-card-item">
-        <div class="grid-card-box position-relative text-white">
-          <div class="gc-header d-flex flex-wrap">
-            <div class="gc-header-left">
+      <li className="grid-card-item">
+        <div className="grid-card-box position-relative text-white">
+          <div className="gc-header d-flex flex-wrap">
+            <div className="gc-header-left">
               <h5>
                 <Skeleton width={100} />
               </h5>
@@ -15,8 +15,8 @@ function CardLoading() {
               </small>
             </div>
           </div>
-          <div class="gc-img-box">
-            <div class="pc-image">
+          <div className="gc-img-box">
+            <div className="pc-image">
               <Skeleton
                 height="100%"
                 style={{
@@ -29,19 +29,19 @@ function CardLoading() {
               />
             </div>
           </div>
-          <div class="gc-footer">
-            <div class="gc-intro-group d-flex flex-wrap">
-              <div class="gc-intro-item flex-grow-1 w-auto">
-                <h6 class="orange-text">
+          <div className="gc-footer">
+            <div className="gc-intro-group d-flex flex-wrap">
+              <div className="gc-intro-item flex-grow-1 w-auto">
+                <h6 className="orange-text">
                   <Skeleton width="80%" />
                 </h6>
-                <p class="orange-text opacity-50">
+                <p className="orange-text opacity-50">
                   <strong>
                     <Skeleton width="80%" />
                   </strong>
                 </p>
               </div>
-              <div class="gc-intro-item text-center flex-grow-1 w-auto">
+              <div className="gc-intro-item text-center flex-grow-1 w-auto">
                 <h6>
                   <Skeleton width="80%" />
                 </h6>
@@ -51,7 +51,7 @@ function CardLoading() {
                   </strong>
                 </p>
               </div>
-              <div class="gc-intro-item flex-grow-1 w-auto">
+              <div className="gc-intro-item flex-grow-1 w-auto">
                 <h6>
                   <Skeleton width="80%" />
                 </h6>

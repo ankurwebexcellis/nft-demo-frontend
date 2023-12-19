@@ -23,12 +23,6 @@ function Card({ address, name, identifier, image, token, collection }) {
                 <strong>TOKEN </strong>
               </p>
             </div>
-            {/* <div className="gc-intro-item text-center flex-grow-1 w-auto">
-              <h6>$25,000</h6>
-              <p>
-                <strong>Value</strong>
-              </p>
-            </div> */}
             <div className="gc-intro-item flex-grow-1 w-auto">
               <h6>{collection}</h6>
               <p>

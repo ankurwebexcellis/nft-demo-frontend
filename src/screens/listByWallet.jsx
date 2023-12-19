@@ -12,6 +12,7 @@ import CardListing from "../components/cardListing";
 import { useParams } from "react-router-dom";
 
 function ListByWallet() {
+  //  Component States
   const [nftList, setNftList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [next, setNext] = useState("");
@@ -29,6 +30,7 @@ function ListByWallet() {
     }
   }, []);
 
+  //  Metamask wallet connect method
   const connectWallet = async (e) => {
     if (e) e.preventDefault();
     try {
@@ -39,23 +41,26 @@ function ListByWallet() {
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
+      setChecked(true);
+      //  Set wallet state with user wallet address
       setWallet(accounts[0]);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
+  //  Fetch NFTs by wallet address of the user
   const fetchNfts = async () => {
     setLoading(true);
     try {
       console.log("wallet1", wallet);
       const response = await loadNftByWallet(wallet);
-      console.log("response", response);
+
+      //  Update states
       setNftList(response?.nfts);
       setNext(response?.next);
-    } catch (err) {
-      console.log("err", err);
-    }
+      setChecked(false);
+    } catch (err) {}
+
+    //  Disable loading states
     setLoading(false);
   };
 

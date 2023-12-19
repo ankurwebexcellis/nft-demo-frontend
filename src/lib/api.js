@@ -3,6 +3,7 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_APIURL,
 });
 
+//  API request to get NFTs by contract address
 export const loadNftByContract = async (params) => {
   try {
     const nft = await api.get("nftApis/byContract", {
@@ -15,17 +16,12 @@ export const loadNftByContract = async (params) => {
   }
 };
 
-export const loadNftByWallet = async (params) => {
-  console.log("paramsparamsparams", {
-    params: params,
-  });
+//  API request to get NFTs by user's wallet address
+export const loadNftByWallet = async (address) => {
   try {
-    console.log("paramsparamsparams", process.env.REACT_APP_APIURL);
-    console.log("1nftnftnft");
     const nft = await api.get("nftApis/byWallet", {
-      params: { address: params },
+      params: { address: address },
     });
-    // console.log("nftnftnft", nft?.data?.data);
     return nft?.data?.data;
   } catch (err) {
     console.error("www", err);
@@ -33,6 +29,7 @@ export const loadNftByWallet = async (params) => {
   }
 };
 
+//  API request to get NFT Details by contract address & identifier
 export const loadNftDetails = async (address, identifier) => {
   try {
     const nft = await api.get("nftApis/nftDetails", {

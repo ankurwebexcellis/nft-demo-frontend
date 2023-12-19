@@ -7,14 +7,13 @@ import ListByContract from "./screens/listByContract";
 import NftDetails from "./screens/nftDetails";
 import ListByWallet from "./screens/listByWallet";
 
-//  Components
-import Header from "./components/header";
-
 function App() {
   return (
     <>
+      {/* React Toastify Container */}
       <ToastContainer position={"bottom-right"} />
 
+      {/*  Routes */}
       <Routes>
         <Route path="/" element={<ListByContract />} />
         <Route path="/wallet" element={<ListByWallet />} />

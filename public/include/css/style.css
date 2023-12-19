@@ -313,22 +313,16 @@ p:last-child {
   height: 24px;
   transition: all 0.2s ease-in;
 }
-.tick-checkbox.form-check
-  input[type="checkbox"].form-check-input:checked
-  + .form-check-label::before {
+.tick-checkbox.form-check input[type="checkbox"].form-check-input:checked + .form-check-label::before {
   border-color: var(--color-dark);
   background: var(--color-dark);
 }
 
-.tick-checkbox.form-check
-  input[type="checkbox"].form-check-input:checked
-  + .form-check-label::after {
+.tick-checkbox.form-check input[type="checkbox"].form-check-input:checked + .form-check-label::after {
   opacity: 1;
   transform: scale(1);
 }
-.tick-checkbox.form-check
-  input[type="checkbox"].form-check-input:disabled
-  + .form-check-label::before {
+.tick-checkbox.form-check input[type="checkbox"].form-check-input:disabled + .form-check-label::before {
   background: #f6f6f6;
 }
 .tooltip.show {
@@ -1872,12 +1866,7 @@ fieldset.fieldset:not(:last-child) {
   background: rgba(0, 0, 0, 0.8);
 }
 .badge.running {
-  background: linear-gradient(
-      0deg,
-      rgba(255, 255, 255, 0.1),
-      rgba(255, 255, 255, 0.1)
-    ),
-    #0ca577;
+  background: linear-gradient(0deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.1)), #0ca577;
 }
 .ut-item-box-inner .image-attribute-details-box strong {
   width: 50px;
@@ -2281,31 +2270,7 @@ label.kt-label {
   align-items: center;
   justify-content: center;
 }
-.burnGost-modal {
-  z-index: 99999 !important;
-}
-.burnGost-modal .modal-content {
-  border-radius: 4px;
-  border: 0;
-}
-.burnGost-modal .modal-header {
-  border: none;
-  padding: 27px 27px 0px;
-}
-.burnGost-modal .modal-header h5 {
-  font-size: 16px;
-  font-weight: 600;
-}
-.burnGost-modal .modal-btn-close {
-  width: 24px;
-  height: 24px;
-  position: absolute;
-  right: 20px;
-  top: 25px;
-}
-.burnGost-modal .modal-body {
-  padding: 34px 27px 37px;
-}
+
 .new-offcanvas-body {
   height: calc(100% - 70px);
 }

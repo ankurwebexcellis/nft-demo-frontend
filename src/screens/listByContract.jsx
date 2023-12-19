@@ -8,18 +8,20 @@ import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import Card from "../components/card";
 import CardLoading from "../components/cardLoading";
+import CardListing from "../components/cardListing";
 
 function NftListings() {
   const [nftList, setNftList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [next, setNext] = useState("");
+  const [address, setAddress] = useState(
+    "0x5Af0D9827E0c53E4799BB226655A1de152A425a5"
+  );
 
   const fetchNfts = async () => {
     setLoading(true);
     try {
-      const response = await loadNftByContract(
-        "0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7"
-      );
+      const response = await loadNftByContract(address);
       setNftList(response?.nfts);
       setNext(response?.next);
     } catch (err) {}
@@ -28,7 +30,7 @@ function NftListings() {
 
   useEffect(() => {
     fetchNfts();
-  }, []);
+  }, [address]);
 
   return (
     <>
@@ -40,49 +42,36 @@ function NftListings() {
             <h1>Contests</h1>
           </div>
           <div className="fwc-wrapper">
-            <div class="fwc-head ">
-              <div class="fwc-inner">
-                <ul class="filter-mode-list d-flex flex-wrap align-items-center">
-                  <li class="flex-fill">
-                    <div class="fml-box">
-                      <label class="form-label">Keyword</label>
-                      <input type="text" class="form-control" />
-                    </div>
-                  </li>
-                  <li class="flex-fill">
-                    <div class="fml-box">
-                      <label class="form-label">Entry Fee</label>
-                      <select class="form-select">
-                        <option selected></option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+            <div className="fwc-head ">
+              <div className="fwc-inner">
+                <ul className="filter-mode-list d-flex flex-wrap align-items-center">
+                  <li className="flex-fill">
+                    <div className="fml-box">
+                      <label className="form-label">Contract Address</label>
+                      <select
+                        className="form-select"
+                        onChange={(e) => setAddress(e.target.value)}
+                        value={address}
+                      >
+                        <option
+                          selected
+                          value="0x5Af0D9827E0c53E4799BB226655A1de152A425a5"
+                        >
+                          Token Milady (MIL)
+                        </option>
+                        <option value="0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7">
+                          Token Loot (LOOT)
+                        </option>
+                        <option value="0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB">
+                          Token CRYPTOPUNKS
+                        </option>
                       </select>
                     </div>
                   </li>
                 </ul>
-                <div class="fwc-btn d-flex align-items-center justify-content-end">
-                  <a href="#!" class="btn-text">
-                    Reset
-                  </a>
-                  <a href="#!" class="btn btn-primary btn-sm">
-                    Search
-                  </a>
-                </div>
               </div>
             </div>
-            <ul className="grid-card-list d-flex flex-wrap">
-              {loading ? (
-                <>
-                  <CardLoading />
-                  <CardLoading />
-                  <CardLoading />
-                  <CardLoading />
-                </>
-              ) : (
-                <Card />
-              )}
-            </ul>
+            <CardListing loading={loading} nftList={nftList} />
           </div>
         </div>
       </div>

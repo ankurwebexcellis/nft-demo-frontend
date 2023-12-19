@@ -41,16 +41,7 @@ function CardLoading() {
                   </strong>
                 </p>
               </div>
-              <div className="gc-intro-item text-center flex-grow-1 w-auto">
-                <h6>
-                  <Skeleton width="80%" />
-                </h6>
-                <p>
-                  <strong>
-                    <Skeleton width="80%" />
-                  </strong>
-                </p>
-              </div>
+
               <div className="gc-intro-item flex-grow-1 w-auto">
                 <h6>
                   <Skeleton width="80%" />

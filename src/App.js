@@ -1,4 +1,4 @@
-import { Routes, Route, useLocation } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
 //  Screens
 import ListByContract from "./screens/listByContract";
@@ -13,7 +13,8 @@ function App() {
     <Routes>
       <Route path="/" element={<ListByContract />} />
       <Route path="/wallet" element={<ListByWallet />} />
-      <Route path="/:id" element={<NftDetails />} />
+      <Route path="/nft/:address/:id" element={<NftDetails />} />
+      <Route path="*" element={<h1>404</h1>} />
     </Routes>
   );
 }

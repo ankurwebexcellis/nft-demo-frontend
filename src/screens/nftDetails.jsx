@@ -1,200 +1,117 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import DetailsLoading from "../components/detailsLoading";
+import { loadNftDetails } from "../lib/api";
+import { useParams } from "react-router-dom";
 
 function NftDetails() {
+  const [nftInfo, setNftInfo] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const params = useParams();
+
+  const fetchNfts = async () => {
+    setLoading(true);
+    try {
+      const response = await loadNftDetails(params.address, params.id);
+      setNftInfo(response?.nft);
+    } catch (err) {}
+    setLoading(false);
+  };
+
+  useEffect(() => {
+    fetchNfts();
+  }, []);
+  console.log(nftInfo);
   return (
     <>
       <Header />
       <div className="page-wrapper">
         <Sidebar page="contract" />
         <div className="fwc-wrapper">
-          {/* User this for laoding */}
-          <DetailsLoading />
-          {/* User this for laoding */}
+          {loading ? (
+            <DetailsLoading />
+          ) : (
+            <div className="grid-card-details-row d-flex flex-wrap">
+              <div className="gcdr-img-box">
+                <div className="gcdr-img-outer text-white">
+                  <div className="gcdr-image">
+                    <img src={nftInfo?.image_url} alt="" />
+                  </div>
+                  <div className="gcdr-group d-flex flex-wrap">
+                    <div className="gcdr-item flex-grow-1 w-auto">
+                      <h6>{nftInfo?.token_standard}</h6>
+                      <p className="opacity-50 ">
+                        <strong>Token</strong>
+                      </p>
+                    </div>
+                    {/* <div className="gcdr-item flex-grow-1 w-auto">
+                      <h6>$25,000</h6>
+                      <p>
+                        <strong>Type</strong>
+                      </p>
+                    </div> */}
+                    <div className="gcdr-item flex-grow-1 w-auto">
+                      <h6>{nftInfo?.collection}</h6>
+                      <p>
+                        <strong>Collection</strong>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
-          {/* Normal Content */}
-          <div className="grid-card-details-row d-flex flex-wrap">
-            <div className="gcdr-img-box">
-              <div className="gcdr-img-outer text-white">
-                <div className="gcdr-image">
-                  <img src="include/images/grid-img-1.jpg" alt="" />
+              <div className="gcdr-text-box">
+                <div className="gcdr-heading">
+                  <h2>{nftInfo?.name}</h2>
                 </div>
-                <div className="gcdr-group d-flex flex-wrap">
-                  <div className="gcdr-item flex-grow-1 w-auto">
-                    <h6 className="orange-text">$5</h6>
-                    <p className="opacity-50 orange-text">
-                      <strong>ENTRY</strong>
-                    </p>
-                  </div>
-                  <div className="gcdr-item flex-grow-1 w-auto">
-                    <h6>$25,000</h6>
-                    <p>
-                      <strong>Type</strong>
-                    </p>
-                  </div>
-                  <div className="gcdr-item flex-grow-1 w-auto">
-                    <h6>250/300</h6>
-                    <p>
-                      <strong>Value</strong>
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="gcdr-text-box">
-              <div className="gcdr-heading-filter d-flex align-items-center justify-content-between">
-                <div className="gcdr-heading-date d-flex align-items-center">
-                  <div className="gcdr-heading-text">
-                    <span>Starts on :</span> 27/06/22
-                  </div>
-                  <div className="dash-line">-</div>
-                  <div className="gcdr-heading-text">
-                    <span>Ends on :</span> 10/07/22
-                  </div>
-                </div>
-                <div className="dropdown custom-dropdown">
-                  <a
-                    className="dropdown-toggle"
-                    id="dropdownMenuLink"
-                    data-bs-toggle="dropdown"
-                    aria-expanded="false"
-                  >
-                    <img src="include/images/more-horizontal.svg" alt="" />
-                  </a>
-                  <ul className="dropdown-menu dropdown-menu-end">
-                    <li>
-                      <a className="dropdown-item" href="#!">
-                        Publish
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item" href="#!">
-                        Edit
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item delete" href="#!">
-                        Delete
-                      </a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div className="gcdr-heading">
-                <h2>BORED APE YACHT CLUB</h2>
-              </div>
-              <p className="grey-text">#1234</p>
-              <p>
-                Vel turpis commodo vitae libero at et. Et donec sit ac
-                scelerisque lorem. Dolor, a sagittis praesent enim lobortis
-                viverra. Tristique felis semper lacinia turpis vitae aliquam
-                pretium leo nibh. Urna, ultrices sit at ut velit condimentum.
-                Sed praesent lectus justo, mauris.
-              </p>
-              <div className="gcdr-widget-wrapper">
-                <div className="gcdr-widget-box">
-                  <h4>Contest closure conditions</h4>
-                  <div className="gcdr-details-box d-flex flex-wrap">
-                    <div className="gcdr-details-left">
-                      <ul className="check-square-list">
-                        <li>
-                          <img src="include/images/check-square.svg" alt="" />
-                          <span>Total Number of Entries</span>
-                        </li>
-                        <li>
-                          <img src="include/images/check-square.svg" alt="" />
-                          <span>End Date & Time</span>
-                        </li>
-                        <li>
-                          <img src="include/images/check-square.svg" alt="" />
-                          <span>Reserve </span>
-                        </li>
-                        <li>
-                          <img src="include/images/check-square.svg" alt="" />
-                          <span>Min Number of Entries</span>
-                        </li>
+                <p className="grey-text">#{nftInfo?.identifier}</p>
+                <p>{nftInfo?.description}</p>
+                {nftInfo?.traits && (
+                  <div className="gcdr-widget-wrapper">
+                    <div class="gcdr-widget-box">
+                      <h4>Traits</h4>
+                      <ul class="gw-list d-flex flex-wrap">
+                        {nftInfo?.traits?.map((trait) => (
+                          <li>
+                            <div class="gw-box">
+                              <em>{trait?.trait_type}</em>
+                              <h6>{trait?.value}</h6>
+                              <p>{trait?.trait_count} have this trait</p>
+                            </div>
+                          </li>
+                        ))}
                       </ul>
                     </div>
-                    <div className="gcdr-details-right">
-                      <p>
-                        Vel turpis commodo vitae libero at et. Et donec sit ac
-                        scelerisque lorem. Dolor, a sagittis praesent enim
-                        lobortis viverra.
-                      </p>
-                      <p>
-                        Tristique felis semper lacinia turpis vitae aliquam
-                        pretium leo nibh. Urna, ultrices sit at ut velit
-                        condimentum. Sed praesent lectus justo, mauris.
-                      </p>
+                  </div>
+                )}
+
+                {nftInfo?.owners && (
+                  <div className="gcdr-widget-wrapper">
+                    <div className="gcdr-widget-box">
+                      <h4>Owners</h4>
+                      <div className="gcdr-details-box">
+                        <ul className="gcdr-text-list">
+                          {nftInfo?.owners?.map((owner, index) => (
+                            <li>
+                              <div className="number-list-box">
+                                <div className="number-list-numerical">
+                                  {index + 1}
+                                </div>
+                                <div className="number-list-content">
+                                  <p>{owner?.address}</p>
+                                </div>
+                              </div>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </div>
-
-              <div className="gcdr-widget-wrapper">
-                <div className="gcdr-widget-box">
-                  <h4>
-                    How it works{" "}
-                    <img src="include/images/help-circle.svg" alt="" />
-                  </h4>
-                  <div className="gcdr-details-box">
-                    <ul className="gcdr-text-list">
-                      <li>
-                        <div className="number-list-box">
-                          <div className="number-list-numerical">1</div>
-                          <div className="number-list-content">
-                            <p>
-                              Vel turpis commodo vitae libero at et. Et donec
-                              sit ac scelerisque lorem
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="number-list-box">
-                          <div className="number-list-numerical">2</div>
-                          <div className="number-list-content">
-                            <p>
-                              Non imperdiet tortor integer in molestie iaculis
-                              egestas urna, ut. Nunc lorem porttitor erat leo
-                              lacus, nonravida morbi donec interdum lectus
-                              neque.
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="number-list-box">
-                          <div className="number-list-numerical">3</div>
-                          <div className="number-list-content">
-                            <p>
-                              Commodo sit in mauris lorem. Maecenas vitae tortor
-                              nisl, volutpat elit pharetra.
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                      <li>
-                        <div className="number-list-box">
-                          <div className="number-list-numerical">4</div>
-                          <div className="number-list-content">
-                            <p>
-                              Elit eget orci, sagittis, non fames. Ullamcorper
-                              rutrum quam aliquet ultrices. Vitae.
-                            </p>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+                )}
               </div>
             </div>
-          </div>
-          {/* Normal Content */}
+          )}
         </div>
       </div>
     </>

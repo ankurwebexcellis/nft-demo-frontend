@@ -17,10 +17,10 @@ export const loadNftByContract = async (params) => {
 };
 
 //  API request to get NFTs by user's wallet address
-export const loadNftByWallet = async (params) => {
+export const loadNftByWallet = async (address) => {
   try {
     const nft = await api.get("nftApis/byWallet", {
-      params: params,
+      params: { address },
     });
     return nft?.data?.data;
   } catch (err) {

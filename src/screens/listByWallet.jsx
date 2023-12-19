@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 
 //  API
-import { loadNftByContract } from "../lib/api";
+import { loadNftByWallet } from "../lib/api";
 
 //  Components
 import Header from "../components/header";
 import Sidebar from "../components/sidebar";
 import Card from "../components/card";
 import CardLoading from "../components/cardLoading";
+import CardListing from "../components/cardListing";
 
 function ListByWallet() {
   const [nftList, setNftList] = useState([]);
@@ -16,15 +17,21 @@ function ListByWallet() {
 
   const [wallet, setWallet] = useState("");
 
-  const connectWallet = async () => {
+  const connectWallet = async (e) => {
+    if (e) e.preventDefault();
     try {
       let ethereum = window.ethereum;
-      if (!ethereum) return window.open("https://metamask.app.link/dapp/" + process.env.REACT_APP_SITE_URL, "_blank");
+      if (!ethereum)
+        return window.open(
+          "https://metamask.app.link/dapp/" + process.env.REACT_APP_SITE_URL,
+          "_blank"
+        );
 
       // Check if we are authorized to access the user's wallet
       const accounts = await ethereum.request({
         method: "eth_requestAccounts",
       });
+      // localStorage.setItem('wallet',accounts[0])
       setWallet(accounts[0]);
     } catch (err) {
       console.log(err);
@@ -34,18 +41,18 @@ function ListByWallet() {
   const fetchNfts = async () => {
     setLoading(true);
     try {
-      // const response = await loadNftByContract(
-      //   "0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7"
-      // );
-      // setNftList(response?.nfts);
-      // setNext(response?.next);
+      const response = await loadNftByWallet(
+        "0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7"
+      );
+      setNftList(response?.nfts);
+      setNext(response?.next);
     } catch (err) {}
     setLoading(false);
   };
 
   useEffect(() => {
     fetchNfts();
-  }, []);
+  }, [wallet]);
 
   return (
     <>
@@ -58,48 +65,8 @@ function ListByWallet() {
               <h1>Contests</h1>
             </div>
             <div className="fwc-wrapper">
-              <div class="fwc-head ">
-                <div class="fwc-inner">
-                  <ul class="filter-mode-list d-flex flex-wrap align-items-center">
-                    <li class="flex-fill">
-                      <div class="fml-box">
-                        <label class="form-label">Keyword</label>
-                        <input type="text" class="form-control" />
-                      </div>
-                    </li>
-                    <li class="flex-fill">
-                      <div class="fml-box">
-                        <label class="form-label">Entry Fee</label>
-                        <select class="form-select">
-                          <option selected></option>
-                          <option value="1">One</option>
-                          <option value="2">Two</option>
-                          <option value="3">Three</option>
-                        </select>
-                      </div>
-                    </li>
-                  </ul>
-                  <div class="fwc-btn d-flex align-items-center justify-content-end">
-                    <a href="#!" class="btn-text">
-                      Reset
-                    </a>
-                    <a href="#!" class="btn btn-primary btn-sm">
-                      Search
-                    </a>
-                  </div>
-                </div>
-              </div>
               <ul className="grid-card-list d-flex flex-wrap">
-                {loading ? (
-                  <>
-                    <CardLoading />
-                    <CardLoading />
-                    <CardLoading />
-                    <CardLoading />
-                  </>
-                ) : (
-                  <Card />
-                )}
+                <CardListing loading={loading} nftList={nftList} />
               </ul>
             </div>
           </div>
@@ -111,11 +78,24 @@ function ListByWallet() {
             <div className="mcw-header d-flex align-items-center">
               <h1>Contests</h1>
             </div>
-            <div className="fwc-wrapper"></div>
-            <a href="#!" class="btn btn-primary btn-sm" onClick={() => connectWallet()}>
-              {" "}
-              Connect Wallet{" "}
-            </a>
+            <div className="fwc-wrapper">
+              <div className="fwc-body">
+                <div className="no-record-found-container">
+                  <div className="nfr-box">
+                    <div className="nrf-text">
+                      <a
+                        href="#!"
+                        class="btn btn-primary btn-sm"
+                        onClick={(e) => connectWallet(e)}
+                      >
+                        Connect{" "}
+                      </a>
+                      <h5>No Wallet Found!</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       )}

@@ -83,7 +83,7 @@ function NftDetails() {
                       <h4>Traits</h4>
                       <ul class="gw-list d-flex flex-wrap">
                         {nftInfo?.traits?.map((trait) => (
-                          <li>
+                          <li key={trait.trait_value}>
                             <div class="gw-box">
                               <em>{trait?.trait_type}</em>
                               <h6>{trait?.value}</h6>
@@ -103,7 +103,7 @@ function NftDetails() {
                       <div className="gcdr-details-box">
                         <ul className="gcdr-text-list">
                           {nftInfo?.owners?.map((owner, index) => (
-                            <li>
+                            <li key={owner?.address}>
                               <div className="number-list-box">
                                 <div className="number-list-numerical">
                                   {index + 1}

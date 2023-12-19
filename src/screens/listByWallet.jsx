@@ -62,9 +62,26 @@ function ListByWallet() {
               <h1>NFTs By Wallet</h1>
             </div>
             <div className="fwc-wrapper">
-              <ul className="grid-card-list d-flex flex-wrap">
+              {nftList?.length > 0 ? (
                 <CardListing loading={loading} nftList={nftList} />
-              </ul>
+              ) : (
+                <div className="fwc-body">
+                  <div className="no-record-found-container">
+                    <div className="nfr-box">
+                      <div className="nrf-text">
+                        <h5>Your wallet does not seem to have any NFT</h5>
+                        <a
+                          href="#!"
+                          class="btn btn-primary btn-sm mt-4"
+                          onClick={(e) => connectWallet(e)}
+                        >
+                          Connect Your Wallet
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -85,9 +102,8 @@ function ListByWallet() {
                         class="btn btn-primary btn-sm"
                         onClick={(e) => connectWallet(e)}
                       >
-                        Connect{" "}
+                        Connect Your Wallet
                       </a>
-                      <h5>No Wallet Found!</h5>
                     </div>
                   </div>
                 </div>

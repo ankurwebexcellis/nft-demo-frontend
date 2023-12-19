@@ -17,6 +17,7 @@ function CardListing({ loading, nftList }) {
       ) : (
         nftList?.map((nft) => (
           <Card
+            key={nft.identifier}
             name={nft?.name}
             identifier={nft?.identifier}
             image={nft?.image_url}

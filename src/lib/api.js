@@ -3,10 +3,10 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_APIURL,
 });
 
-export const loadNftByContract = async (address) => {
+export const loadNftByContract = async (params) => {
   try {
     const nft = await api.get("nftApis/byContract", {
-      params: { address },
+      params: params,
     });
     return nft?.data?.data;
   } catch (err) {
@@ -15,10 +15,10 @@ export const loadNftByContract = async (address) => {
   }
 };
 
-export const loadNftByWallet = async (address) => {
+export const loadNftByWallet = async (params) => {
   try {
     const nft = await api.get("nftApis/byWallet", {
-      params: { address },
+      params: params,
     });
     return nft?.data?.data;
   } catch (err) {

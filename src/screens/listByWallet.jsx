@@ -41,9 +41,7 @@ function ListByWallet() {
   const fetchNfts = async () => {
     setLoading(true);
     try {
-      const response = await loadNftByWallet(
-        "0xFF9C1b15B16263C61d017ee9F65C50e4AE0113D7"
-      );
+      const response = await loadNftByWallet(wallet);
       setNftList(response?.nfts);
       setNext(response?.next);
     } catch (err) {}
@@ -51,7 +49,7 @@ function ListByWallet() {
   };
 
   useEffect(() => {
-    fetchNfts();
+    if (wallet) fetchNfts();
   }, [wallet]);
 
   return (
